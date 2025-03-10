@@ -23,3 +23,27 @@ addBookToLibrary("Crime and Punishment", "Fyodor Dostoevsky", 671, false);
 addBookToLibrary("Brave New World", "Aldous Huxley", 311, true);
 addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 310, false);
 
+function displayBooks(){
+    let table = document.querySelector("table");
+    table.innerHTML = "<tr><th>Title</th> <th>Author</th> <th>Pages</th> <th>Read?</th> <th>ID</th></tr>";
+    myLibrary.forEach((element) => {
+        table.innerHTML += `<tr><td>${element.title}</td><td>${element.author}</td><td>${element.pages}</td><td>${element.read}</td><td>${element.id}</td><td><button id="${element.id}" class="delete">Delete</button></td></tr>`;
+    });
+    let deleteButtons = Array.from(document.querySelectorAll(".delete"));
+    deleteButtons.forEach((element) => {
+        element.addEventListener("click", ()=>{
+            for(let i = 0; i < myLibrary.length; i++){
+                if(myLibrary[i].id == element.id){
+                    myLibrary.splice(i, 1);
+                    displayBooks();
+                    break;
+                }
+            }
+
+        })
+    });
+}
+
+let form = document.querySelector("form");
+
+displayBooks();
